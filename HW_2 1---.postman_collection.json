@@ -1,0 +1,104 @@
+{
+	"info": {
+		"_postman_id": "a52e0542-1457-42f3-8e63-336e83fa32f7",
+		"name": "HW_2 1***",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "20293853"
+	},
+	"item": [
+		{
+			"name": "1***",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"//* Преобразовать пункты 12-13-14 (salary из реквеста и респонса равны) таким образом, чтобы проверка производилась циклом, в котором будет всего ОДИН тест. Имя теста должно меняться в зависимости от значения в Salary\r",
+							"\r",
+							"\r",
+							"let reqData = request.data //объявляем переменные чтоб было по короче\r",
+							"let age = reqData.age\r",
+							"let name = reqData.name\r",
+							"let salary = reqData.salary\r",
+							"\r",
+							"const checkName = () => {\r",
+							"    if(2 < name.length && name.length <41 && (name.trim().length === name.length)) {return true} else {return false}\r",
+							"}//проверяем имя\r",
+							"\r",
+							"const checkAge = () => {\r",
+							"    if(Number.isInteger(+age) && 17 < age && age < 121 ) {return true} else {return false}\r",
+							"}\r",
+							"//проверяем возраст\r",
+							"const checkSalary = () => {\r",
+							"    if( Number.isInteger(+salary) && 0 < salary && age < 1000001){return true} else {return false}\r",
+							"}\r",
+							"//проверяем з/п\r",
+							"if(checkName && checkAge && checkSalary) {\r",
+							"// если все корректно проверяем что пришёл 200 код\r",
+							"    pm.test(\"Status code is 200\", function () {\r",
+							"        pm.response.to.have.status(200);\r",
+							"    });\r",
+							"} else {\r",
+							"//если нет то проверяем что пришёл не 200 код\r",
+							"    pm.test(\"Status code is NOT 200\", function () {\r",
+							"        pm.response.to.not.have.status(200);\r",
+							"    });\r",
+							"}\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "name",
+							"value": "{{name}}",
+							"type": "text"
+						},
+						{
+							"key": "age",
+							"value": "{{age}}",
+							"type": "text"
+						},
+						{
+							"key": "salary",
+							"value": "{{salary}}",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://162.55.220.72:5005/user_info_2",
+					"protocol": "http",
+					"host": [
+						"162",
+						"55",
+						"220",
+						"72"
+					],
+					"port": "5005",
+					"path": [
+						"user_info_2"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

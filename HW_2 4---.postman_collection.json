@@ -1,0 +1,114 @@
+{
+	"info": {
+		"_postman_id": "bfdc0e52-b082-450c-83b7-cb89bee3b753",
+		"name": "HW_2 4***",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "20293853"
+	},
+	"item": [
+		{
+			"name": "4***",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"//1)  Преобразовать задания 8 - 13 (проверить что в json имеется нужный параметр) таким образом, чтобы все проверки делались в цикле (1 проверка в цикле, в которую попадают нужные параметры). Название теста должно видоизменяться исходя из подаваемых данных. ( ${}  или другим способом) \r",
+							"//8. Проверить, что json response имеет параметр start_qa_salary \r",
+							"// 9. Проверить, что json response имеет параметр qa_salary_after_6_months \r",
+							"// 10. Проверить, что json response имеет параметр qa_salary_after_12_months \r",
+							"// 11. Проверить, что json response имеет параметр qa_salary_after_1.5_year \r",
+							"// 12. Проверить, что json response имеет параметр qa_salary_after_3.5_years \r",
+							"// 13. Проверить, что json response имеет параметр person \r",
+							"\r",
+							"let jsonData = pm.response.json() //объявляем переменные для реквеста и респонса\r",
+							"let reqData = request.data\r",
+							"const checkArr = ['start_qa_salary','qa_salary_after_6_months','qa_salary_after_12_months','qa_salary_after_1.5_year','qa_salary_after_3.5_years','person'] //создаем массив с проверяемыми параметрами респонса\r",
+							"\r",
+							"\r",
+							"for (let key in jsonData) {\r",
+							"    pm.test(`Key ${key} is exist in response`, () => {\r",
+							"        pm.expect(checkArr).to.include(key)\r",
+							"    })\r",
+							"}\r",
+							"// пробегаемся по респонсу на предмет совпадений\r",
+							"\r",
+							"//2) ** Преобразовать задания 14 - 18 (проверить что параметр равен salary умножить на коэффициент) таким образом, чтобы все проверки делались в цикле (1 проверка в цикле, в которую попадают нужные параметры). Название теста должно видоизменяться исходя из подаваемых данных. ( ${}  или другим способом) \r",
+							"\r",
+							"// 14. Проверить, что параметр start_qa_salary равен salary из request (salary забрать из request.) \r",
+							"// 15. Проверить, что параметр qa_salary_after_6_months равен salary*2 из request (salary забрать из request.) \r",
+							"// 16. Проверить, что параметр qa_salary_after_12_months равен salary*2.7 из request (salary забрать из request.) \r",
+							"// 17. Проверить, что параметр qa_salary_after_1.5_year равен salary*3.3 из request (salary забрать из request.) \r",
+							"// 18. Проверить, что параметр qa_salary_after_3.5_years равен salary*3.8 из request (salary забрать из request.)\r",
+							"\r",
+							"const multiplyObj = {start_qa_salary: 1, qa_salary_after_6_months:2, qa_salary_after_12_months:2.7,'qa_salary_after_1.5_year' :3.3, 'qa_salary_after_3.5_years':3.8} //создаем объект ключ: значений коэфициентов\r",
+							"\r",
+							"for (let key in multiplyObj) {\r",
+							"    pm.test(`${key} has right value`, () =>{\r",
+							"        pm.expect(jsonData[key]).to.eql(multiplyObj[key]* reqData.salary)\r",
+							"    })\r",
+							"    }\r",
+							"//пробегаемся по значения респонса и сравниваем их \r",
+							"\r",
+							"//3) *** Преобразовать описанные выше задания 1 и 2 для данного эндпоинта в ОДИН ЦИКЛ, в котором будут проходить ОБА теста.\r",
+							"\r",
+							"\r",
+							"check: for (let key in jsonData) {\r",
+							"    \r",
+							"    pm.test(`Key ${key} IS exist in response`, () => {\r",
+							"        pm.expect(checkArr).to.include(key)\r",
+							"    })\r",
+							"    \r",
+							"    pm.test(`${key} has correct value`, () => {\r",
+							"        if(typeof jsonData[key] !== 'object') {\r",
+							"            pm.expect(jsonData[key]).to.eql(multiplyObj[key]*reqData.salary)\r",
+							"        } else throw new Error (`${key} is not included into 14-18 task items`)\r",
+							"    })\r",
+							"}"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "name",
+							"value": "Sema",
+							"type": "text"
+						},
+						{
+							"key": "age",
+							"value": "15",
+							"type": "text"
+						},
+						{
+							"key": "salary",
+							"value": "1700",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://162.55.220.72:5005/user_info_2",
+					"protocol": "http",
+					"host": [
+						"162",
+						"55",
+						"220",
+						"72"
+					],
+					"port": "5005",
+					"path": [
+						"user_info_2"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

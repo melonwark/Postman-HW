@@ -1,0 +1,88 @@
+{
+	"info": {
+		"_postman_id": "1191dc5a-b244-4e8f-97da-a61361d18f67",
+		"name": "HW_2 2***",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "20293853"
+	},
+	"item": [
+		{
+			"name": "2***",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"// \r",
+							"// 2. http://162.55.220.72:5007/object_info_4\r",
+							"// * Преобразовать пункты 12-13-14 (salary из реквеста и респонса равны) таким образом, чтобы проверка производилась циклом, в котором будет всего ОДИН тест. Имя теста должно меняться в зависимости от значения в Salary\r",
+							"\r",
+							"\r",
+							"let jsonData = pm.response.json()\r",
+							"let reqData = pm.request.url.query.toObject()\r",
+							"\r",
+							"console.log(reqData)\r",
+							"\r",
+							"\r",
+							"jsonData.salary.forEach((el, index) => {pm.test(`Salary*${index+1} is right`, function () {\r",
+							"pm.expect(+el).to.eql((index+1)*reqData.salary)\r",
+							"})})\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "name",
+						"value": "{{name}}",
+						"type": "text"
+					},
+					{
+						"key": "age",
+						"value": "{{age}}",
+						"type": "text"
+					},
+					{
+						"key": "salary",
+						"value": "{{salary}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://162.55.220.72:5005/object_info_4?name={{name}}&age={{age}}&salary={{salary}}",
+					"protocol": "http",
+					"host": [
+						"162",
+						"55",
+						"220",
+						"72"
+					],
+					"port": "5005",
+					"path": [
+						"object_info_4"
+					],
+					"query": [
+						{
+							"key": "name",
+							"value": "{{name}}"
+						},
+						{
+							"key": "age",
+							"value": "{{age}}"
+						},
+						{
+							"key": "salary",
+							"value": "{{salary}}"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

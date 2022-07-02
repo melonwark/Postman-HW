@@ -1,0 +1,97 @@
+{
+	"info": {
+		"_postman_id": "f3ca1ecb-8e5c-4192-b86f-06d73e1e8c8d",
+		"name": "HW_2 3***",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "20293853"
+	},
+	"item": [
+		{
+			"name": "3***",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"// 3. http://162.55.220.72:5005/object_info_3\r",
+							"//  Преобразовать задания 5-7 (сравнить идентичные поля в реквесте и респонсе) таким образом, чтобы это делалось ЗА ОДИН ТЕСТ (сразу все 3 поля) БЕЗ ЦИКЛОВ! (глубокое сравнение объектов)\r",
+							"\r",
+							"// 5. Проверить, что name в ответе равно name s request (name забрать из request.) \r",
+							"// 6. Проверить, что age в ответе равно age s request (age забрать из request.) \r",
+							"// 7. Проверить, что salary в ответе равно salary s request (salary забрать из request.)\r",
+							"\r",
+							"const jsonData = pm.response.json()\r",
+							"const reqData = pm.request.url.query.toObject()\r",
+							"// создаем объект из респонса\r",
+							"\r",
+							"//заполняем его\r",
+							"\r",
+							"const deepEql = (objResponse, objReq) => {\r",
+							"    let objToEql = {}// создаем объект \r",
+							"    for ( let key in objReq) objToEql[key] = String(objResponse[key])  //заполняем его ключами из реквеста и берем значения по данным ключам из респонса и приводим все к строке (ТОМУ ЧЕ SALARY С БЭКА ВОЗВРАЩАЕТ INT (ノಠ益ಠ)ノ彡┻━┻)\r",
+							"    console.log(objToEql)\r",
+							"    console.log(reqData)\r",
+							"    const objIsExist = typeof objToEql === 'object' && typeof objReq === 'object' //проверяем что оба значения объекты\r",
+							"    const objIsNotNull = objToEql !== null && objReq !== null // проверяем что они не null\r",
+							"\r",
+							"    if(objIsNotNull && objIsExist) {\r",
+							"        for( let key in objReq) {\r",
+							"            if(!objToEql.hasOwnProperty(key)) return false // проверяем что объект респонса содержит идентичные ключи из реквеста\r",
+							"        \r",
+							"        if(objToEql[key] !== objReq[key]) return false //проверяем что значения в ключе респонса идентичны с значениями из реквеста\r",
+							"    }}\r",
+							"return true // если ни одна из проверок не вернула false, значит объекты идентчины\r",
+							"}\r",
+							"\r",
+							"\r",
+							"pm.test(\"Поля из response и request равны\", function () {\r",
+							"      pm.expect( deepEql(jsonData, reqData)).to.be.true\r",
+							"});\r",
+							"\r",
+							"let rightResponse = {}// создаем правильный респонс объект, хоть и немного не правильный\r",
+							"    for ( let key in jsonData) rightResponse[key] = String(jsonData[key])\r",
+							"\r",
+							"pm.test('Objects are eql', () => pm.expect(rightResponse).to.deep.include(reqData)) // и теперь все что мы расписали в 15 строчек, умещаем в одну\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://162.55.220.72:5005/object_info_3?name=Sema&age=15&salary=1700",
+					"protocol": "http",
+					"host": [
+						"162",
+						"55",
+						"220",
+						"72"
+					],
+					"port": "5005",
+					"path": [
+						"object_info_3"
+					],
+					"query": [
+						{
+							"key": "name",
+							"value": "Sema"
+						},
+						{
+							"key": "age",
+							"value": "15"
+						},
+						{
+							"key": "salary",
+							"value": "1700"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
